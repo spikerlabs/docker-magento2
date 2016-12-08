@@ -1,0 +1,31 @@
+version: '2'
+services:
+  app:
+    volumes:
+      - .:/var/www:rw
+    working_dir: /var/www
+    extra_hosts:
+      magento2.local: 172.18.0.1
+    environment:
+      - M2_DB_HOST=database
+      - M2_DB_NAME=magento2
+      - M2_DB_USERNAME=root
+      - M2_DB_PASSWORD=root
+      - M2_BASE_URL=http://magento2.local/
+      - M2_ADMIN_FIRSTNAME=Admin
+      - M2_ADMIN_LASTNAME=User
+      - M2_ADMIN_EMAIL=magento2@example.com
+      - M2_ADMIN_USER=admin
+      - M2_ADMIN_PASSWORD=admin123
+      - M2_EDITION=community-edition
+      - M2_VERSION=2.1.2
+    cpuset: '1'
+  server:
+    volumes:
+      - .:/var/www:ro
+    extra_hosts:
+      magento2.local: 127.0.0.1
+  database:
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=magento2
